@@ -11,7 +11,7 @@ Also works on vscode.dev!
 ## Platforms
 
 - Flutter
-- Lit (Web component and SSR)
+- Lit
 - React
 - JSON
 
