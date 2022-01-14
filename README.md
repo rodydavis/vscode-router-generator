@@ -8,6 +8,12 @@ You can check out the examples for more details.
 
 Also works on vscode.dev!
 
+## Features
+
+- File based routing (with regex)
+- Nested layouts
+- Optional loader function (to pass data to a component)
+
 ## Platforms
 
 - Flutter
