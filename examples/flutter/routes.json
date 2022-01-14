@@ -1,0 +1,62 @@
+{
+  "pages": {
+    "/settings": {
+      "name": "SettingsPage",
+      "relativePath": "pages/settings.dart",
+      "route": "/settings",
+      "path": "/Users/rodydavis/Documents/ideas/vscode-router-generator/examples/flutter/lib/pages/settings.dart",
+      "args": []
+    },
+    "/about/guest": {
+      "name": "GuestPage",
+      "relativePath": "pages/about/guest.dart",
+      "route": "/about/guest",
+      "path": "/Users/rodydavis/Documents/ideas/vscode-router-generator/examples/flutter/lib/pages/about/guest.dart",
+      "args": []
+    },
+    "/about/:id": {
+      "name": "AccountPage",
+      "relativePath": "pages/about/:id.dart",
+      "route": "/about/:id",
+      "path": "/Users/rodydavis/Documents/ideas/vscode-router-generator/examples/flutter/lib/pages/about/:id.dart",
+      "args": []
+    },
+    "/about/": {
+      "name": "AboutDetails",
+      "relativePath": "pages/about/index.dart",
+      "route": "/about/",
+      "path": "/Users/rodydavis/Documents/ideas/vscode-router-generator/examples/flutter/lib/pages/about/index.dart",
+      "args": []
+    },
+    "/about": {
+      "name": "AboutPage",
+      "relativePath": "pages/about.dart",
+      "route": "/about",
+      "path": "/Users/rodydavis/Documents/ideas/vscode-router-generator/examples/flutter/lib/pages/about.dart",
+      "args": []
+    },
+    "/": {
+      "name": "HomePage",
+      "relativePath": "pages/index.dart",
+      "route": "/",
+      "path": "/Users/rodydavis/Documents/ideas/vscode-router-generator/examples/flutter/lib/pages/index.dart",
+      "args": []
+    },
+    "": {
+      "name": "RootPage",
+      "relativePath": "pages/root.dart",
+      "route": "",
+      "path": "/Users/rodydavis/Documents/ideas/vscode-router-generator/examples/flutter/lib/pages/root.dart",
+      "args": []
+    }
+  },
+  "routes": [
+    "/settings",
+    "/about/guest",
+    "/about/:id",
+    "/about/",
+    "/about",
+    "/",
+    ""
+  ]
+}

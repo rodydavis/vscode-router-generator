@@ -1,0 +1,69 @@
+{
+  "pages": {
+    "/projects/:id": {
+      "hasLoader": true,
+      "name": "ProjectDetails",
+      "path": "/Users/rodydavis/Documents/ideas/vscode-router-generator/examples/react/src/pages/projects/:id.tsx",
+      "route": "/projects/:id",
+      "args": [
+        "id"
+      ],
+      "ext": "tsx",
+      "alias": "route1",
+      "relativePath": "pages/projects/:id",
+      "implicitIndex": false,
+      "parentRoute": "/projects"
+    },
+    "/projects/": {
+      "hasLoader": true,
+      "name": "ProjectList",
+      "path": "/Users/rodydavis/Documents/ideas/vscode-router-generator/examples/react/src/pages/projects/index.tsx",
+      "route": "/projects/",
+      "args": [],
+      "ext": "tsx",
+      "alias": "route2",
+      "relativePath": "pages/projects/index",
+      "parentRoute": "/projects"
+    },
+    "/projects": {
+      "hasLoader": false,
+      "name": "ProjectBase",
+      "path": "/Users/rodydavis/Documents/ideas/vscode-router-generator/examples/react/src/pages/projects.tsx",
+      "route": "/projects",
+      "args": [],
+      "ext": "tsx",
+      "alias": "route3",
+      "relativePath": "pages/projects",
+      "implicitIndex": true,
+      "parentRoute": ""
+    },
+    "/": {
+      "hasLoader": false,
+      "name": "Home",
+      "path": "/Users/rodydavis/Documents/ideas/vscode-router-generator/examples/react/src/pages/index.tsx",
+      "route": "/",
+      "args": [],
+      "ext": "tsx",
+      "alias": "route0",
+      "relativePath": "pages/index",
+      "parentRoute": ""
+    },
+    "": {
+      "hasLoader": false,
+      "name": "Root",
+      "path": "/Users/rodydavis/Documents/ideas/vscode-router-generator/examples/react/src/pages/root.tsx",
+      "route": "",
+      "args": [],
+      "ext": "tsx",
+      "alias": "route4",
+      "relativePath": "pages/root"
+    }
+  },
+  "routes": [
+    "/projects/:id",
+    "/projects/",
+    "/projects",
+    "/",
+    ""
+  ]
+}

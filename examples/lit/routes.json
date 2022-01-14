@@ -1,0 +1,184 @@
+{
+  "pages": {
+    "/test": {
+      "name": "test-module",
+      "path": "/Users/rodydavis/Documents/ideas/vscode-router-generator/examples/lit/src/pages/test.:page.multiple.:args.ts",
+      "hasLoader": false,
+      "route": "/test",
+      "args": [],
+      "ext": ":page",
+      "alias": "route13",
+      "relativePath": "pages/test.multiple.:args.ts",
+      "implicitIndex": false,
+      "parentRoute": ""
+    },
+    "/settings/admin": {
+      "name": "admin-settings",
+      "path": "/Users/rodydavis/Documents/ideas/vscode-router-generator/examples/lit/src/pages/settings/admin.ts",
+      "hasLoader": false,
+      "route": "/settings/admin",
+      "args": [],
+      "ext": "ts",
+      "alias": "route10",
+      "relativePath": "pages/settings/admin",
+      "implicitIndex": false,
+      "parentRoute": "/settings"
+    },
+    "/settings/": {
+      "name": "settings-default",
+      "path": "/Users/rodydavis/Documents/ideas/vscode-router-generator/examples/lit/src/pages/settings/index.ts",
+      "hasLoader": false,
+      "route": "/settings/",
+      "args": [],
+      "ext": "ts",
+      "alias": "route11",
+      "relativePath": "pages/settings/index",
+      "parentRoute": "/settings"
+    },
+    "/settings": {
+      "name": "settings-module",
+      "path": "/Users/rodydavis/Documents/ideas/vscode-router-generator/examples/lit/src/pages/settings.ts",
+      "hasLoader": false,
+      "route": "/settings",
+      "args": [],
+      "ext": "ts",
+      "alias": "route12",
+      "relativePath": "pages/settings",
+      "implicitIndex": true,
+      "parentRoute": ""
+    },
+    "/dashboard/overview": {
+      "name": "overview-module",
+      "path": "/Users/rodydavis/Documents/ideas/vscode-router-generator/examples/lit/src/pages/dashboard/overview.ts",
+      "hasLoader": false,
+      "route": "/dashboard/overview",
+      "args": [],
+      "ext": "ts",
+      "alias": "route6",
+      "relativePath": "pages/dashboard/overview",
+      "implicitIndex": false,
+      "parentRoute": "/dashboard"
+    },
+    "/dashboard/account/:userid": {
+      "name": "account-details",
+      "path": "/Users/rodydavis/Documents/ideas/vscode-router-generator/examples/lit/src/pages/dashboard/account/:userId.ts",
+      "hasLoader": true,
+      "route": "/dashboard/account/:userid",
+      "args": [
+        "userid"
+      ],
+      "ext": "ts",
+      "alias": "route2",
+      "relativePath": "pages/dashboard/account/:userId",
+      "implicitIndex": false,
+      "parentRoute": "/dashboard/account"
+    },
+    "/dashboard/account/": {
+      "name": "account-info",
+      "path": "/Users/rodydavis/Documents/ideas/vscode-router-generator/examples/lit/src/pages/dashboard/account/index.ts",
+      "hasLoader": true,
+      "route": "/dashboard/account/",
+      "args": [],
+      "ext": "ts",
+      "alias": "route3",
+      "relativePath": "pages/dashboard/account/index",
+      "parentRoute": "/dashboard/account"
+    },
+    "/dashboard/account": {
+      "name": "account-module",
+      "path": "/Users/rodydavis/Documents/ideas/vscode-router-generator/examples/lit/src/pages/dashboard/account.ts",
+      "hasLoader": false,
+      "route": "/dashboard/account",
+      "args": [],
+      "ext": "ts",
+      "alias": "route4",
+      "relativePath": "pages/dashboard/account",
+      "implicitIndex": true,
+      "parentRoute": "/dashboard"
+    },
+    "/dashboard/": {
+      "name": "dashboard-default",
+      "path": "/Users/rodydavis/Documents/ideas/vscode-router-generator/examples/lit/src/pages/dashboard/index.ts",
+      "hasLoader": false,
+      "route": "/dashboard/",
+      "args": [],
+      "ext": "ts",
+      "alias": "route5",
+      "relativePath": "pages/dashboard/index",
+      "parentRoute": "/dashboard"
+    },
+    "/dashboard": {
+      "name": "dashboard-module",
+      "path": "/Users/rodydavis/Documents/ideas/vscode-router-generator/examples/lit/src/pages/dashboard.ts",
+      "hasLoader": false,
+      "route": "/dashboard",
+      "args": [],
+      "ext": "ts",
+      "alias": "route7",
+      "relativePath": "pages/dashboard",
+      "implicitIndex": true,
+      "parentRoute": ""
+    },
+    "/custom": {
+      "name": "custom-route",
+      "path": "/Users/rodydavis/Documents/ideas/vscode-router-generator/examples/lit/src/pages/custom.not.nested.route.ts",
+      "hasLoader": false,
+      "route": "/custom",
+      "args": [],
+      "ext": "not",
+      "alias": "route1",
+      "relativePath": "pages/custom.nested.route.ts",
+      "implicitIndex": false,
+      "parentRoute": ""
+    },
+    "/404": {
+      "name": "unknown-route",
+      "path": "/Users/rodydavis/Documents/ideas/vscode-router-generator/examples/lit/src/pages/404.ts",
+      "hasLoader": false,
+      "route": "/404",
+      "args": [],
+      "ext": "ts",
+      "alias": "route0",
+      "relativePath": "pages/404",
+      "implicitIndex": false,
+      "parentRoute": ""
+    },
+    "/": {
+      "name": "app-module",
+      "path": "/Users/rodydavis/Documents/ideas/vscode-router-generator/examples/lit/src/pages/index.ts",
+      "hasLoader": false,
+      "route": "/",
+      "args": [],
+      "ext": "ts",
+      "alias": "route8",
+      "relativePath": "pages/index",
+      "parentRoute": ""
+    },
+    "": {
+      "name": "root-module",
+      "path": "/Users/rodydavis/Documents/ideas/vscode-router-generator/examples/lit/src/pages/root.ts",
+      "hasLoader": false,
+      "route": "",
+      "args": [],
+      "ext": "ts",
+      "alias": "route9",
+      "relativePath": "pages/root"
+    }
+  },
+  "routes": [
+    "/test",
+    "/settings/admin",
+    "/settings/",
+    "/settings",
+    "/dashboard/overview",
+    "/dashboard/account/:userid",
+    "/dashboard/account/",
+    "/dashboard/account",
+    "/dashboard/",
+    "/dashboard",
+    "/custom",
+    "/404",
+    "/",
+    ""
+  ]
+}
