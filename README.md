@@ -1,4 +1,4 @@
-# router-generator README
+# vscode-router-generator
 
 VSCode Extension to generate a router based on a file structure and returning the correct nested layouts.
 
