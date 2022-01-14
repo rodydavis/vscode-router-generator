@@ -21,6 +21,73 @@ Also works on vscode.dev!
 
 This will generate a json file at the route containing all the metadata found after crawling the pages directory.
 
+```json
+{
+  "pages": {
+    "/projects/:id": {
+      "hasLoader": true,
+      "name": "ProjectDetails",
+      "route": "/projects/:id",
+      "args": [
+        "id"
+      ],
+      "ext": "tsx",
+      "alias": "route1",
+      "relativePath": "pages/projects/:id",
+      "implicitIndex": false,
+      "parentRoute": "/projects"
+    },
+    "/projects/": {
+      "hasLoader": true,
+      "name": "ProjectList",
+      "route": "/projects/",
+      "args": [],
+      "ext": "tsx",
+      "alias": "route2",
+      "relativePath": "pages/projects/index",
+      "parentRoute": "/projects"
+    },
+    "/projects": {
+      "hasLoader": false,
+      "name": "ProjectBase",
+      "route": "/projects",
+      "args": [],
+      "ext": "tsx",
+      "alias": "route3",
+      "relativePath": "pages/projects",
+      "implicitIndex": true,
+      "parentRoute": ""
+    },
+    "/": {
+      "hasLoader": false,
+      "name": "Home",
+      "route": "/",
+      "args": [],
+      "ext": "tsx",
+      "alias": "route0",
+      "relativePath": "pages/index",
+      "parentRoute": ""
+    },
+    "": {
+      "hasLoader": false,
+      "name": "Root",
+      "route": "",
+      "args": [],
+      "ext": "tsx",
+      "alias": "route4",
+      "relativePath": "pages/root"
+    }
+  },
+  "routes": [
+    "/projects/:id",
+    "/projects/",
+    "/projects",
+    "/",
+    ""
+  ]
+}
+```
+
 ## Lit
 
 `Generate Lit Router`
