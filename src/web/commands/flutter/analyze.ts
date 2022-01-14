@@ -9,8 +9,6 @@ export function analyzeWidget(page: PageRoute): FlutterWidget | null {
 
     // Use regex to find "class MyWidget extends UiRoute" 
     const className = raw.match(/class ([^ ]+) extends UiRoute/g);
-    // // Check for loader(
-    // const loader = raw.match(/loader\(([a-zA-Z0-9_]+)\)/);
 
     if (className !== null) {
         const name = className[0].split(" ")[1].trim();
