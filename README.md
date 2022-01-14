@@ -232,9 +232,10 @@ You can define a layout and an optional loader for a given page:
 import * as React from "react";
 
 export function loader(route: string, args: { [key: string]: any }) {
+    const id = args['id'];
     return {
-        id: "1",
-        name: "Project 1",
+        id: `${id}`,
+        name: `Project ${id}`,
     };
 }
 
