@@ -6,13 +6,14 @@ There can be optional loader function to return data to the component before the
 
 You can check out the examples for more details.
 
-Also works on vscode.dev!
+Inspired by https://remix.run
 
 ## Features
 
 - File based routing (with regex)
 - Nested layouts
 - Optional loader function (to pass data to a component)
+- Works on https://vscode.dev
 
 ## Platforms
 
