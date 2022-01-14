@@ -221,8 +221,7 @@ const root = document.getElementById('root');
 
 async function loadApp() {
   const AppRoot = await App();
-  ReactDOM.render(AppRoot, root
-  );
+  ReactDOM.render(AppRoot, root);
 }
 
 window.addEventListener("hashchange", () => {
