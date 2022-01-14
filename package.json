@@ -39,7 +39,7 @@
 			},
 			{
 				"command": "router-generator.generate-lit-router-component",
-				"title": "Generate Lit router component"
+				"title": "Generate Lit Router Component"
 			},
 			{
 				"command": "router-generator.generate-flutter",
