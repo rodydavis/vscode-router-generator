@@ -17,10 +17,10 @@ Inspired by https://remix.run
 
 ## Platforms
 
-- Flutter
-- Lit
-- React
-- JSON
+- Flutter (.dart)
+- Lit (.js, .ts)
+- React (.tsx, .jsx)
+- JSON (.json)
 
 ## JSON
 

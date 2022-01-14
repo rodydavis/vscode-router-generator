@@ -1,9 +1,10 @@
-# Change Log
+## 1.0.1
 
-All notable changes to the "router-generator" extension will be documented in this file.
+- Ignoring test files
 
-Check [Keep a Changelog](http://keepachangelog.com/) for recommendations on how to structure this file.
+## 0.0.1
 
-## [Unreleased]
-
-- Initial release
+- Added Flutter
+- Added React
+- Added Lit
+- Added JSON

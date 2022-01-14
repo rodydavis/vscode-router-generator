@@ -1,15 +1,31 @@
 {
 	"name": "router-generator",
-	"displayName": "router-generator",
-	"description": "Generate a routed based on file based routing and nested layouts.",
-	"version": "0.0.1",
-	"repository": "https://github.com/rodydavis/vscode-router-generator",
+	"displayName": "Router Generator",
+	"description": "Generate a router based on file based routing and nested layouts for Flutter, Lit and React",
+	"publisher": "rodydavis",
+	"version": "1.0.1",
+	"icon": "images/icon.png",
+	"repository": {
+		"type": "git",
+		"url": "https://github.com/rodydavis/vscode-router-generator"
+	},
+	"bugs": {
+		"url": "https://github.com/rodydavis/vscode-router-generator/issues",
+		"email": "rody.davis.jr@gmail.com"
+	},
+	"homepage": "https://github.com/rodydavis/vscode-router-generator/blob/main/README.md",
 	"engines": {
 		"vscode": "^1.63.0"
 	},
+	"author": {
+		"name": "Rody Davis"
+	},
+	"preview": true,
 	"categories": [
+		"Snippets",
 		"Other"
 	],
+	"license": "SEE LICENSE",
 	"activationEvents": [
 		"onCommand:router-generator.generate-json",
 		"onCommand:router-generator.generate-flutter",
