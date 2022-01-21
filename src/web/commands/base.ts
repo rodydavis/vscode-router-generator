@@ -21,10 +21,11 @@ export async function generateBase(
     const root = folder[0].uri.fsPath;
     // Check for pages folder
     let pagesDir: vscode.Uri | undefined;
+    const pagesDirPath = getSetting("pagesDir") || "pages";
     for (const folderPath of [
       `${root}/lib/pages`,
       `${root}/src/pages`,
-      `${root}/pages`,
+      `${root}/${pagesDirPath}`,
     ]) {
       const uri = vscode.Uri.parse(folderPath);
       try {
@@ -73,6 +74,7 @@ async function analyzePages(files: string[]) {
     if (route) {
       route = route.toLowerCase().trim();
       route = route.replace("/index", "/").replace("/root", "");
+      route = route.split(".").join("/");
       if (fileType === "dart") {
         pages.push({ path: file, contents, route, type: "flutter" });
       } else if (fileType === "tsx" || fileType === "jsx") {

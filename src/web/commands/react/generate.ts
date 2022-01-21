@@ -41,7 +41,11 @@ export function generateReact(root: string, pages: PageRoute[]) {
         const tree = getComponentTree(c, components);
         for (let i = 0; i < tree.length - 1; i++) {
             const item = tree[i];
-            sb.write(`<${item.alias}>`);
+            sb.write(`<${item.alias} `);
+             for (const arg of item.args) {
+               sb.write(` ${arg}={Object(args)["${arg}"]}`);
+             }
+            sb.write(`>`);
         }
         sb.write(`<${c.alias}`);
         for (const arg of c.args) {

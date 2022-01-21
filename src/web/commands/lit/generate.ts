@@ -55,7 +55,11 @@ export function exportLit(pages: PageRoute[]) {
         const tree = getComponentTree(c, components);
         for (let i = 0; i < tree.length - 1; i++) {
             const element = tree[i];
-            sb.write(`<${element.name}>`);
+            sb.write(`<${element.name} `);
+             for (const arg of element.args) {
+               sb.write(`${arg}=\${args['${arg}']} `);
+             }
+            sb.write(`>`);
         }
         sb.write(`<${c.name} `);
         for (const arg of c.args) {
