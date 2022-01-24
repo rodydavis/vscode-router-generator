@@ -6,7 +6,10 @@ export async function loader(
   route: string,
   args: { [key: string]: any }
 ): Promise<User> {
-  const data = await fetch('https://jsonplaceholder.typicode.com/users/' + args.userId).then((res) => res.json());
+  const id = Object(args)["user_id"];
+  const data = await fetch(
+    "https://jsonplaceholder.typicode.com/users/" + id
+  ).then((res) => res.json());
   return data;
 }
 
@@ -18,7 +21,8 @@ export class AccountDetails extends LitElement {
     }
   `;
 
-  @property() userId = "";
+  // eslint-disable-next-line @typescript-eslint/naming-convention
+  @property() user_id = "";
   @property({ type: Object }) data!: User;
 
   override render() {

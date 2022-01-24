@@ -54,7 +54,12 @@ async function analyzePages(files: string[]) {
   const pages: PageRoute[] = [];
   for (const file of files) {
     const contents = await readFile(file);
-    const fileType = `${file}`.split(".").pop();
+    // Remove extension
+    let idx = file.length - 1;
+    while (file[idx] !== ".") {
+      idx--;
+    }
+    const fileType = file.slice(idx + 1, file.length);
     const includeTestFiles = getSetting("includeTestFiles") === "true";
     if (
       !includeTestFiles &&
@@ -70,17 +75,30 @@ async function analyzePages(files: string[]) {
     ) {
       continue;
     }
-    let route = `${file}`.split("pages")[1].split(".")[0];
+    let route = `${file}`.split("pages")[1];
+    route = route.replace(`.${fileType}`, "");
     if (route) {
-      route = route.toLowerCase().trim();
+      route = route.trim();
       route = route.replace("/index", "/").replace("/root", "");
       route = route.split(".").join("/");
       if (fileType === "dart") {
-        pages.push({ path: file, contents, route, type: "flutter" });
+        pages.push({
+          path: file,
+          contents,
+          route,
+          type: "flutter",
+          ext: fileType,
+        });
       } else if (fileType === "tsx" || fileType === "jsx") {
-        pages.push({ path: file, contents, route, type: "react" });
+        pages.push({
+          path: file,
+          contents,
+          route,
+          type: "react",
+          ext: fileType,
+        });
       } else if (fileType === "ts" || fileType === "js") {
-        pages.push({ path: file, contents, route, type: "lit" });
+        pages.push({ path: file, contents, route, type: "lit", ext: fileType });
       }
     }
   }
@@ -94,4 +112,5 @@ export interface PageRoute {
   route: string;
   contents: string;
   type: ProjectType;
+  ext: string;
 }

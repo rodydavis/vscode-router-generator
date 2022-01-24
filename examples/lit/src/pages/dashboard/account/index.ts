@@ -2,8 +2,10 @@ import { html, css, LitElement } from "lit";
 import { customElement, property } from "lit/decorators.js";
 import { User } from "../../../classes/user";
 
-export async function loader() {
-  const data = await fetch("https://jsonplaceholder.typicode.com/users").then((res) => res.json());
+export async function loader(..._args: any) {
+  const data = await fetch("https://jsonplaceholder.typicode.com/users").then(
+    (res) => res.json()
+  );
   return data;
 }
 
@@ -19,12 +21,15 @@ export class AccountInfo extends LitElement {
 
   override render() {
     return html`<article>
-  <h3>Accounts</h3>
-  <ul>
-    ${this.data.map(
-    (user) => html`<li><a href="#/dashboard/account/${user.id}">${user.name}</a></li>`
-    )}
-  </ul>
-</article>`;
+      <h3>Accounts</h3>
+      <ul>
+        ${this.data.map(
+          (user) =>
+            html`<li>
+              <a href="#/dashboard/account/${user.id}">${user.name}</a>
+            </li>`
+        )}
+      </ul>
+    </article>`;
   }
 }
