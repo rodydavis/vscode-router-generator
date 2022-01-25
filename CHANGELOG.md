@@ -1,3 +1,7 @@
+## 1.0.4
+
+- Adding support for adding extension
+
 ## 1.0.3
 
 - Fixing case sensitive args

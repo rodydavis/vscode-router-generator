@@ -7,6 +7,7 @@ import { getComponentTree } from "../utils/meta-data";
 
 export function exportLit(pages: PageRoute[]) {
   const dynamicImports = getSetting("dynamicImports") || false;
+  const includeExt = getSetting("includeExt") || false;
   const sb = new StringBuilder();
   const components: WebComponent[] = pagesToComponents(pages);
   addHeader(sb, components);
@@ -14,7 +15,11 @@ export function exportLit(pages: PageRoute[]) {
   sb.writeln();
   if (!dynamicImports) {
     for (const c of components) {
-      sb.writeln(`import * as ${c.alias} from './${c.relativePath}';`);
+      sb.writeln(
+        `import * as ${c.alias} from './${c.relativePath}${
+          includeExt ? ".js" : ""
+        }';`
+      );
     }
     sb.writeln();
   }

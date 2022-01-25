@@ -19,25 +19,25 @@
 
 import { html, TemplateResult } from "lit";
 
-import * as route13 from "./pages/test.:page.multiple.:args";
-import * as route10 from "./pages/settings/admin";
-import * as route11 from "./pages/settings/index";
-import * as route12 from "./pages/settings";
-import * as route6 from "./pages/dashboard/overview";
-import * as route2 from "./pages/dashboard/account/:user_id";
-import * as route3 from "./pages/dashboard/account/index";
-import * as route4 from "./pages/dashboard/account";
-import * as route5 from "./pages/dashboard/index";
-import * as route7 from "./pages/dashboard";
-import * as route1 from "./pages/custom.not.nested.route";
-import * as route0 from "./pages/404";
-import * as route8 from "./pages/index";
-import * as route9 from "./pages/root";
+import * as route13 from './pages/test.:page.multiple.:args.js';
+import * as route10 from './pages/settings/admin.js';
+import * as route11 from './pages/settings/index.js';
+import * as route12 from './pages/settings.js';
+import * as route6 from './pages/dashboard/overview.js';
+import * as route2 from './pages/dashboard/account/:user_id.js';
+import * as route3 from './pages/dashboard/account/index.js';
+import * as route4 from './pages/dashboard/account.js';
+import * as route5 from './pages/dashboard/index.js';
+import * as route7 from './pages/dashboard.js';
+import * as route1 from './pages/custom.not.nested.route.js';
+import * as route0 from './pages/404.js';
+import * as route8 from './pages/index.js';
+import * as route9 from './pages/root.js';
 
 interface LitOptions {
-  route: string;
-  args: { [key: string]: string };
-  data: any;
+  route: string,
+  args: { [key: string]: string },
+  data: any
 }
 
 interface PageRoute {
@@ -46,245 +46,168 @@ interface PageRoute {
   hasIndex: boolean;
   name: string;
   parentRoute?: string;
-  dataLoader: (
-    alias: any,
-    route: string,
-    args: { [key: string]: string }
-  ) => Promise<any>;
+  dataLoader: (alias:any, route:string, args: { [key: string]: string }) => Promise<any>;
 }
 
 export const routes = new Map<string, PageRoute>([
-  [
-    "/test/:page/multiple/:args",
-    {
-      render: ({ args }) =>
-        html`<root-module
-          ><test-module page=${args["page"]} args=${args["args"]}></test-module
-        ></root-module>`,
-      lazyImport: async () => route13,
-      dataLoader: () => Promise.resolve(null),
-      hasIndex: false,
-      name: "route13",
-    },
-  ],
-  [
-    "/settings/admin",
-    {
-      render: () =>
-        html`<root-module
-          ><settings-module><admin-settings></admin-settings></settings-module
-        ></root-module>`,
-      lazyImport: async () => route10,
-      dataLoader: () => Promise.resolve(null),
-      hasIndex: false,
-      name: "route10",
-      parentRoute: "/settings",
-    },
-  ],
-  [
-    "/settings/",
-    {
-      render: () =>
-        html`<root-module
-          ><settings-module
-            ><settings-default></settings-default></settings-module
-        ></root-module>`,
-      lazyImport: async () => route11,
-      dataLoader: () => Promise.resolve(null),
-      hasIndex: false,
-      name: "route11",
-      parentRoute: "/settings",
-    },
-  ],
-  [
-    "/settings",
-    {
-      render: () =>
-        html`<root-module><settings-module></settings-module></root-module>`,
-      lazyImport: async () => route12,
-      dataLoader: () => Promise.resolve(null),
-      hasIndex: true,
-      name: "route12",
-      parentRoute: "",
-    },
-  ],
-  [
-    "/dashboard/overview",
-    {
-      render: () =>
-        html`<root-module
-          ><dashboard-module
-            ><overview-module></overview-module></dashboard-module
-        ></root-module>`,
-      lazyImport: async () => route6,
-      dataLoader: () => Promise.resolve(null),
-      hasIndex: false,
-      name: "route6",
-      parentRoute: "/dashboard",
-    },
-  ],
-  [
-    "/dashboard/account/:user_id",
-    {
-      render: ({ args, data }) =>
-        html`<root-module
-          ><dashboard-module
-            ><account-module
-              ><account-details
-                user_id=${args["user_id"]}
-                .data=${data["route2"]}
-              ></account-details></account-module></dashboard-module
-        ></root-module>`,
-      lazyImport: async () => route2,
-      dataLoader: (alias, route, args) => alias.loader(route, args),
-      hasIndex: false,
-      name: "route2",
-      parentRoute: "/dashboard/account",
-    },
-  ],
-  [
-    "/dashboard/account/",
-    {
-      render: ({ data }) =>
-        html`<root-module
-          ><dashboard-module
-            ><account-module
-              ><account-info
-                .data=${data["route3"]}
-              ></account-info></account-module></dashboard-module
-        ></root-module>`,
-      lazyImport: async () => route3,
-      dataLoader: (alias, route, args) => alias.loader(route, args),
-      hasIndex: false,
-      name: "route3",
-      parentRoute: "/dashboard/account",
-    },
-  ],
-  [
-    "/dashboard/account",
-    {
-      render: () =>
-        html`<root-module
-          ><dashboard-module><account-module></account-module></dashboard-module
-        ></root-module>`,
-      lazyImport: async () => route4,
-      dataLoader: () => Promise.resolve(null),
-      hasIndex: true,
-      name: "route4",
-      parentRoute: "/dashboard",
-    },
-  ],
-  [
-    "/dashboard/",
-    {
-      render: () =>
-        html`<root-module
-          ><dashboard-module
-            ><dashboard-default></dashboard-default></dashboard-module
-        ></root-module>`,
-      lazyImport: async () => route5,
-      dataLoader: () => Promise.resolve(null),
-      hasIndex: false,
-      name: "route5",
-      parentRoute: "/dashboard",
-    },
-  ],
-  [
-    "/dashboard",
-    {
-      render: () =>
-        html`<root-module><dashboard-module></dashboard-module></root-module>`,
-      lazyImport: async () => route7,
-      dataLoader: () => Promise.resolve(null),
-      hasIndex: true,
-      name: "route7",
-      parentRoute: "",
-    },
-  ],
-  [
-    "/custom/not/nested/route",
-    {
-      render: () =>
-        html`<root-module><custom-route></custom-route></root-module>`,
-      lazyImport: async () => route1,
-      dataLoader: () => Promise.resolve(null),
-      hasIndex: false,
-      name: "route1",
-    },
-  ],
-  [
-    "/404",
-    {
-      render: () =>
-        html`<root-module><unknown-route></unknown-route></root-module>`,
-      lazyImport: async () => route0,
-      dataLoader: () => Promise.resolve(null),
-      hasIndex: false,
-      name: "route0",
-      parentRoute: "",
-    },
-  ],
-  [
-    "/",
-    {
-      render: () => html`<root-module><app-module></app-module></root-module>`,
-      lazyImport: async () => route8,
-      dataLoader: () => Promise.resolve(null),
-      hasIndex: false,
-      name: "route8",
-      parentRoute: "",
-    },
-  ],
-  [
-    "",
-    {
-      render: () => html`<root-module></root-module>`,
-      lazyImport: async () => route9,
-      dataLoader: () => Promise.resolve(null),
-      hasIndex: false,
-      name: "route9",
-    },
-  ],
+  ['/test/:page/multiple/:args', {
+        render: ({ args, data }) => html`<root-module ><test-module page=${args['page']} args=${args['args']} ></test-module></root-module>`,
+        lazyImport: async () => route13,
+        dataLoader: () => Promise.resolve(null),
+        hasIndex: false,
+        name: "route13",
+    }],
+  ['/settings/admin', {
+        render: ({ args, data }) => html`<root-module ><settings-module ><admin-settings ></admin-settings></settings-module></root-module>`,
+        lazyImport: async () => route10,
+        dataLoader: () => Promise.resolve(null),
+        hasIndex: false,
+        name: "route10",
+        parentRoute: "/settings",
+    }],
+  ['/settings/', {
+        render: ({ args, data }) => html`<root-module ><settings-module ><settings-default ></settings-default></settings-module></root-module>`,
+        lazyImport: async () => route11,
+        dataLoader: () => Promise.resolve(null),
+        hasIndex: false,
+        name: "route11",
+        parentRoute: "/settings",
+    }],
+  ['/settings', {
+        render: ({ args, data }) => html`<root-module ><settings-module ></settings-module></root-module>`,
+        lazyImport: async () => route12,
+        dataLoader: () => Promise.resolve(null),
+        hasIndex: true,
+        name: "route12",
+        parentRoute: "",
+    }],
+  ['/dashboard/overview', {
+        render: ({ args, data }) => html`<root-module ><dashboard-module ><overview-module ></overview-module></dashboard-module></root-module>`,
+        lazyImport: async () => route6,
+        dataLoader: () => Promise.resolve(null),
+        hasIndex: false,
+        name: "route6",
+        parentRoute: "/dashboard",
+    }],
+  ['/dashboard/account/:user_id', {
+        render: ({ args, data }) => html`<root-module ><dashboard-module ><account-module ><account-details user_id=${args['user_id']}  .data=${data["route2"]} ></account-details></account-module></dashboard-module></root-module>`,
+        lazyImport: async () => route2,
+        dataLoader: (alias, route, args) => alias.loader(route, args),
+        hasIndex: false,
+        name: "route2",
+        parentRoute: "/dashboard/account",
+    }],
+  ['/dashboard/account/', {
+        render: ({ args, data }) => html`<root-module ><dashboard-module ><account-module ><account-info  .data=${data["route3"]} ></account-info></account-module></dashboard-module></root-module>`,
+        lazyImport: async () => route3,
+        dataLoader: (alias, route, args) => alias.loader(route, args),
+        hasIndex: false,
+        name: "route3",
+        parentRoute: "/dashboard/account",
+    }],
+  ['/dashboard/account', {
+        render: ({ args, data }) => html`<root-module ><dashboard-module ><account-module ></account-module></dashboard-module></root-module>`,
+        lazyImport: async () => route4,
+        dataLoader: () => Promise.resolve(null),
+        hasIndex: true,
+        name: "route4",
+        parentRoute: "/dashboard",
+    }],
+  ['/dashboard/', {
+        render: ({ args, data }) => html`<root-module ><dashboard-module ><dashboard-default ></dashboard-default></dashboard-module></root-module>`,
+        lazyImport: async () => route5,
+        dataLoader: () => Promise.resolve(null),
+        hasIndex: false,
+        name: "route5",
+        parentRoute: "/dashboard",
+    }],
+  ['/dashboard', {
+        render: ({ args, data }) => html`<root-module ><dashboard-module ></dashboard-module></root-module>`,
+        lazyImport: async () => route7,
+        dataLoader: () => Promise.resolve(null),
+        hasIndex: true,
+        name: "route7",
+        parentRoute: "",
+    }],
+  ['/custom/not/nested/route', {
+        render: ({ args, data }) => html`<root-module ><custom-route ></custom-route></root-module>`,
+        lazyImport: async () => route1,
+        dataLoader: () => Promise.resolve(null),
+        hasIndex: false,
+        name: "route1",
+    }],
+  ['/404', {
+        render: ({ args, data }) => html`<root-module ><unknown-route ></unknown-route></root-module>`,
+        lazyImport: async () => route0,
+        dataLoader: () => Promise.resolve(null),
+        hasIndex: false,
+        name: "route0",
+        parentRoute: "",
+    }],
+  ['/', {
+        render: ({ args, data }) => html`<root-module ><app-module ></app-module></root-module>`,
+        lazyImport: async () => route8,
+        dataLoader: () => Promise.resolve(null),
+        hasIndex: false,
+        name: "route8",
+        parentRoute: "",
+    }],
+  ['', {
+        render: ({ args, data }) => html`<root-module ></root-module>`,
+        lazyImport: async () => route9,
+        dataLoader: () => Promise.resolve(null),
+        hasIndex: false,
+        name: "route9",
+    }],
 ]);
 
-export async function renderRoute(
-  route: string
-): Promise<TemplateResult | null> {
-  const match = getRoute(route);
-  if (match) {
-    const args = getArgsForRoute(route);
-    const attrs: { [key: string]: string } = {};
-    if (args?.groups) {
-      for (const [key, value] of Object.entries(args.groups)) {
-        if (key && value) {
-          attrs[key] = value;
+export async function renderRoute(route: string) : Promise<TemplateResult | null> {
+    const match = getRoute(route);
+    if (match) {
+        const args = getArgsForRoute(route);
+        const attrs: { [key: string]: string } = {};
+        if (args?.groups) {
+            for (const [key, value] of Object.entries(args.groups)) {
+                if (key && value) { attrs[key] = value; }
+            }
         }
-      }
+        const promises: { [key: string]: Promise<any> } = {};
+        promises[route] = getRouteData(route, attrs);
+        let parentRoute = match.parentRoute;
+        while (parentRoute !== undefined) {
+            let _route = parentRoute;
+            // Replace args in parent route
+            if (args?.groups) {
+              for (const [key, value] of Object.entries(args.groups)) {
+                if (key && value) {
+                  _route = _route.replace(`:${key}`, value);
+                }
+              }
+            }
+            const parentMatch = getRoute(_route, false);
+            if (parentMatch) {
+              promises[_route] = getRouteData(_route, attrs, false);
+            }
+            parentRoute = parentMatch?.parentRoute;
+        }
+        const results = await Promise.all(Object.values(promises));
+        const data = results.reduce((acc, result) => {
+          if (result) {
+            return { ...acc, ...result };
+          }
+          return acc;
+        }, {});
+        return match.render({ route, args: attrs, data });
     }
-    const promises: { [key: string]: Promise<any> } = {};
-    promises[route] = getRouteData(route, attrs);
-    let parentRoute = match.parentRoute;
-    while (parentRoute !== undefined) {
-      const parentMatch = getRoute(parentRoute, false);
-      if (parentMatch) {
-        promises[parentRoute] = getRouteData(parentRoute, attrs);
-      }
-      parentRoute = parentMatch?.parentRoute;
-    }
-    const results = await Promise.all(Object.values(promises));
-    const data = results.reduce((acc, result) => {
-      if (result) {
-        return { ...acc, ...result };
-      }
-      return acc;
-    }, {});
-    return match.render({ route, args: attrs, data });
-  }
-  return null;
+    return null;
 }
 
-async function getRouteData(route: string, attrs: { [key: string]: string }) {
-  const match = getRoute(route);
+async function getRouteData(
+  route: string,
+  attrs: { [key: string]: string },
+  implicitIndex = true
+) {
+  const match = getRoute(route, implicitIndex);
   if (match) {
     const alias = await match.lazyImport();
     const data = await match.dataLoader(alias, route, attrs);
@@ -294,43 +217,39 @@ async function getRouteData(route: string, attrs: { [key: string]: string }) {
 }
 
 function getRoute(route: string, implicitIndex = true) {
-  const match = routes.get(route);
-  if (match) {
-    if (match.hasIndex && implicitIndex) {
-      const indexMatch = routes.get(`${route}/`);
-      if (indexMatch) {
-        return indexMatch;
-      }
+    const match = routes.get(route);
+    if (match) {
+        if (match.hasIndex && implicitIndex) {
+            const indexMatch = routes.get(`${route}/`);
+            if (indexMatch) {
+                return indexMatch;
+            }
+        }
+        return match;
     }
-    return match;
-  }
-  for (const [key, value] of routes.entries()) {
-    const regMatch = route.match(fixRegex(key));
-    if (regMatch !== null) {
-      return value;
+    for (const [key, value] of routes.entries()) {
+        const regMatch = route.match(fixRegex(key));
+        if (regMatch !== null) { return value; }
     }
-  }
-  return routes.get("/404");
+    return routes.get('/404');
 }
 
 function fixRegex(route: string): RegExp {
-  const variableRegex = "[a-zA-Z0-9_-]+";
-  const nameWithParameters = route.replace(
-    new RegExp(`:(${variableRegex})`),
-    (match) => {
-      const groupName = match.slice(1);
-      return `(?<${groupName}>[a-zA-Z0-9_\\-.,:;+*^%$@!]+)`;
-    }
-  );
-  return new RegExp(`^${nameWithParameters}$`);
+    const variableRegex = "[a-zA-Z0-9_-]+";
+    const nameWithParameters = route.replace(
+        new RegExp(`:(${variableRegex})`),
+        (match) => {
+            const groupName = match.slice(1);
+            return `(?<${groupName}>[a-zA-Z0-9_\\-.,:;+*^%$@!]+)`;
+        }
+    );
+    return new RegExp(`^${nameWithParameters}$`);
 }
 
 function getArgsForRoute(route: string): RegExpMatchArray | null {
-  for (const key of Array.from(routes.keys())) {
-    const regMatch = route.match(fixRegex(key));
-    if (regMatch !== null) {
-      return regMatch;
+     for(const key of Array.from(routes.keys())) {
+        const regMatch = route.match(fixRegex(key));
+        if (regMatch !== null) { return regMatch; }
     }
-  }
-  return null;
+    return null;
 }
