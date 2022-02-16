@@ -12,3 +12,4 @@ webpack.config.js
 **/*.map
 **/*.ts
 examples/**
+screenshots/**
