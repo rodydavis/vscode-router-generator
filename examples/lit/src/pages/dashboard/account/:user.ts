@@ -3,10 +3,9 @@ import { customElement, property } from "lit/decorators.js";
 import { User } from "../../../classes/user";
 
 export async function loader(
-  route: string,
   args: { [key: string]: any }
 ): Promise<User> {
-  const id = Object(args)["user_id"];
+  const id = Object(args)["user"];
   const data = await fetch(
     "https://jsonplaceholder.typicode.com/users/" + id
   ).then((res) => res.json());
@@ -22,7 +21,7 @@ export class AccountDetails extends LitElement {
   `;
 
   // eslint-disable-next-line @typescript-eslint/naming-convention
-  @property() user_id = "";
+  @property() user = "";
   @property({ type: Object }) data!: User;
 
   override render() {

@@ -3,7 +3,7 @@
 	"displayName": "Router Generator",
 	"description": "Generate a router based on file based routing and nested layouts for Flutter, Lit and React",
 	"publisher": "rodydavis",
-	"version": "1.0.4",
+	"version": "1.1.0",
 	"icon": "images/icon.png",
 	"repository": {
 		"type": "git",
@@ -30,9 +30,7 @@
 		"onCommand:router-generator.generate-json",
 		"onCommand:router-generator.generate-flutter",
 		"onCommand:router-generator.generate-react",
-		"onCommand:router-generator.generate-lit",
-		"onCommand:router-generator.generate-lit-ssr",
-		"onCommand:router-generator.generate-lit-router-component"
+		"onCommand:router-generator.generate-lit"
 	],
 	"browser": "./dist/web/extension.js",
 	"contributes": {
@@ -50,32 +48,45 @@
 				"title": "Generate Lit Router"
 			},
 			{
-				"command": "router-generator.generate-lit-ssr",
-				"title": "Generate Lit SSR Server"
-			},
-			{
-				"command": "router-generator.generate-lit-router-component",
-				"title": "Generate Lit Router Component"
-			},
-			{
 				"command": "router-generator.generate-flutter",
 				"title": "Generate Flutter Router"
 			}
-		]
+		],
+		"configuration": {
+			"type": "object",
+			"title": "router-generator",
+			"properties": {
+				"router-generator.dynamicImports": {
+					"type": "boolean",
+					"default":false,
+					"description": "Generate dynamic imports",
+					"scope": "window"
+				},
+				"router-generator.includeExt": {
+					"type": "boolean",
+					"default":false,
+					"description": "Include extension in file name",
+					"scope": "window"
+				}
+			}
+		}
 	},
 	"scripts": {
 		"test": "vscode-test-web --browserType=chromium --extensionDevelopmentPath=. --extensionTestsPath=dist/web/test/suite/index.js",
 		"pretest": "npm run compile-web",
 		"vscode:prepublish": "npm run package-web",
+		"build": "npm run compile-web",
 		"compile-web": "webpack",
 		"watch-web": "webpack --watch",
 		"package-web": "webpack --mode production --devtool hidden-source-map",
 		"lint": "eslint src --ext ts",
 		"run-in-browser": "vscode-test-web --browserType=chromium --extensionDevelopmentPath=. .",
-		"package": "vsce package"
+		"package": "vsce package",
+		"publish": "vsce publish"
 	},
 	"devDependencies": {
 		"@types/mocha": "^9.0.0",
+		"@types/mustache": "^4.1.3",
 		"@types/vscode": "^1.63.0",
 		"@types/webpack-env": "^1.16.3",
 		"@typescript-eslint/eslint-plugin": "^5.9.1",
@@ -92,6 +103,7 @@
 		"webpack-cli": "^4.9.1"
 	},
 	"dependencies": {
-		"buffer": "^6.0.3"
+		"buffer": "^6.0.3",
+		"mustache": "^4.2.0"
 	}
 }

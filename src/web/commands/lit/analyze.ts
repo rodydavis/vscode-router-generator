@@ -79,8 +79,8 @@ export function pagesToComponents(pages: PageRoute[]) {
     const components: WebComponent[] = [];
     let i = 0;
     for (const { path, route, contents } of pages) {
-        const relativePath = path.split("pages")[1];
-        const filePath = `./pages${relativePath}`;
+        const relativePath = path.split("routes")[1];
+        const filePath = `./routes${relativePath}`;
         const fileRoute = route.replace("/root", "").replace("/index", "/");
         const results = analyzeWebComponent(filePath, fileRoute, contents);
         if (results.length > 0) {

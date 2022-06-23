@@ -38,7 +38,7 @@ export function generateJson(pages: PageRoute[]) {
             routes.push(c.route);
         }
     }
-    json["pages"] = routePages;
-    json["routes"] = routes;
+    json["routes"] = routePages;
+    // json["routes"] = routes;
     return JSON.stringify(json, null, 2);
 }

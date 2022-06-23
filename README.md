@@ -12,7 +12,6 @@ Inspired by https://remix.run
 
 - File based routing (with regex)
 - Nested layouts
-- Optional loader function (to pass data to a component)
 - Works on https://vscode.dev
 
 ## Platforms
@@ -26,21 +25,19 @@ Inspired by https://remix.run
 
 `Generate JSON for Routes`
 
-This will generate a json file at the route containing all the metadata found after crawling the pages directory.
+This will generate a json file at the route containing all the metadata found after crawling the `routes` directory.
 
 ```json
 {
-  "pages": {
+  "routes": {
     "/projects/:id": {
       "hasLoader": true,
       "name": "ProjectDetails",
       "route": "/projects/:id",
-      "args": [
-        "id"
-      ],
+      "args": ["id"],
       "ext": "tsx",
       "alias": "route1",
-      "relativePath": "pages/projects/:id",
+      "relativePath": "routes/projects/:id",
       "implicitIndex": false,
       "parentRoute": "/projects"
     },
@@ -51,7 +48,7 @@ This will generate a json file at the route containing all the metadata found af
       "args": [],
       "ext": "tsx",
       "alias": "route2",
-      "relativePath": "pages/projects/index",
+      "relativePath": "routes/projects/index",
       "parentRoute": "/projects"
     },
     "/projects": {
@@ -61,7 +58,7 @@ This will generate a json file at the route containing all the metadata found af
       "args": [],
       "ext": "tsx",
       "alias": "route3",
-      "relativePath": "pages/projects",
+      "relativePath": "routes/projects",
       "implicitIndex": true,
       "parentRoute": ""
     },
@@ -72,7 +69,7 @@ This will generate a json file at the route containing all the metadata found af
       "args": [],
       "ext": "tsx",
       "alias": "route0",
-      "relativePath": "pages/index",
+      "relativePath": "routes/index",
       "parentRoute": ""
     },
     "": {
@@ -82,16 +79,9 @@ This will generate a json file at the route containing all the metadata found af
       "args": [],
       "ext": "tsx",
       "alias": "route4",
-      "relativePath": "pages/root"
+      "relativePath": "routes/root"
     }
-  },
-  "routes": [
-    "/projects/:id",
-    "/projects/",
-    "/projects",
-    "/",
-    ""
-  ]
+  }
 }
 ```
 
@@ -99,68 +89,34 @@ This will generate a json file at the route containing all the metadata found af
 
 `Generate Lit Router`
 
-Generates a router that can be used both server side and browser side.
-
-`Generate Lit Component`
-
-Generates a Lit web component that can consume the generated router and listen for hash changes.
-
-```html
-<body>
-    <generated-app> </generated-app>
-    <script type="module" src="/src/generated-app.ts"></script>
-</body>
-```
-
-`Generate Lit SSR Server`
-
-Generates a express.js application that consumes the router and returns html rendered on the server.
-
-To generate a route just define a web component and an optional loader method:
-
+Generates a [router](https://www.npmjs.com/package/@lit-labs/router) that can be used both server side and browser side.
 
 ```js
-import { html, css, LitElement } from "lit";
-import { customElement, property } from "lit/decorators.js";
+@customElement("router-outlet")
+export class RouterOutlet extends LitElement {
+  router = createRouter(this);
 
-export async function loader(
-  route: string,
-  args: { [key: string]: any }
-): Promise<AccountData> {
-  await new Promise((resolve) => setTimeout(resolve, 1000));
-  const id = args["id"]!;
-  return {
-    id,
-    name: "Name: " + id,
-    email: route,
-  };
-}
-
-@customElement("account-details")
-export class AccountDetails extends LitElement {
-  static styles = css``;
-
-  @property({ type: String }) id = "";
-  @property({ type: Object }) data!: AccountData;
-
-  render() {
-    return html`<section>User ID: ${this.data.id}</section>`;
+  override render() {
+    return this.router.outlet();
   }
 }
 
-interface AccountData {
-  id: string;
-  name: string;
-  email: string;
-}
+```
 
+Also generates a Lit web component that can consume the generated router and listen for hash changes.
+
+```html
+<body>
+  <router-outlet> </router-outlet>
+  <script type="module" src="/src/router.ts"></script>
+</body>
 ```
 
 ## Flutter
 
 `Generate Flutter Router`
 
-Generates a Flutter MaterialApp with a generated router using Navigator 2.0 and will listen for hash changes and return the correct layout for the route.
+Generates a Flutter MaterialApp with a [router](https://pub.dev/packages/go_router) using Navigator 2.0 and will listen for hash changes and return the correct layout for the route.
 
 ```dart
 import 'package:flutter/material.dart';
@@ -168,31 +124,35 @@ import 'package:flutter/material.dart';
 import 'router.dart';
 
 void main() {
-  runApp(GeneratedApp(
+  runApp(MaterialApp.router(
+    debugShowCheckedModeBanner: false,
     themeMode: ThemeMode.system,
     theme: ThemeData.light(),
     darkTheme: ThemeData.dark(),
+    routerDelegate: router.routerDelegate,
+    routeInformationParser: router.routeInformationParser,
   ));
 }
 
 ```
 
-To build a class extend UiRoute and override the methods (including an optional loader):
+Create a widget with the exact properties in the url params and a child if you nest the content in a route:
 
 ```dart
 import 'package:flutter/material.dart';
 
-import '../../router.dart';
+class AccountPage extends StatelessWidget {
+  const AccountPage({
+    Key? key,
+    required this.id,
+  }) : super(key: key);
 
-class AccountPage extends UiRoute<Map<String, String>> {
-  @override
-  loader(route, args) => args;
+  final String id;
 
   @override
-  Widget builder(
-      BuildContext context, Map<String, String> data, Widget? child) {
+  Widget build(BuildContext context) {
     return Center(
-      child: Text('ID: ${data['id']}'),
+      child: Text('ID: $id'),
     );
   }
 }
@@ -214,10 +174,10 @@ Generates a async React component that can be used to render a layout based on t
 You can import the generated router and run it at the top level index.js:
 
 ```jsx
-import * as ReactDOM from 'react-dom';
-import App from './router';
+import * as ReactDOM from "react-dom";
+import App from "./router";
 
-const root = document.getElementById('root');
+const root = document.getElementById("root");
 
 async function loadApp() {
   const AppRoot = await App();
@@ -234,40 +194,38 @@ loadApp();
 You can define a layout and an optional loader for a given page:
 
 ```jsx
-
 import * as React from "react";
 
 export function loader(route: string, args: { [key: string]: any }) {
-    const id = args['id'];
-    return {
-        id: `${id}`,
-        name: `Project ${id}`,
-    };
+  const id = args["id"];
+  return {
+    id: `${id}`,
+    name: `Project ${id}`,
+  };
 }
 
 export default function ProjectDetails({
-    data,
-    children,
+  data,
+  children,
 }: {
-    id: string;
-    data: Project;
-    children?: React.ReactNode;
+  id: string,
+  data: Project,
+  children?: React.ReactNode,
 }) {
-    const project = data;
-    return (
-        <div>
-            <h3>{project.name}</h3>
+  const project = data;
+  return (
+    <div>
+      <h3>{project.name}</h3>
 
-            {children}
-        </div>
-    );
+      {children}
+    </div>
+  );
 }
 
 interface Project {
-    id: string;
-    name: string;
+  id: string;
+  name: string;
 }
-
 ```
 
 To build with nested layouts you can use the children from the props to pass down the tree:
@@ -276,17 +234,22 @@ To build with nested layouts you can use the children from the props to pass dow
 import * as React from "react";
 import Header from "../components/Header";
 
-export default function ProjectBase({ children }: { children?: React.ReactNode }) {
-    return (
-        <div>
-            <Header title="Projects" />
-            <section style={{
-                padding: '1rem',
-            }}>
-                {children}
-            </section>
-        </div>
-    );
+export default function ProjectBase({
+  children,
+}: {
+  children?: React.ReactNode,
+}) {
+  return (
+    <div>
+      <Header title="Projects" />
+      <section
+        style={{
+          padding: "1rem",
+        }}
+      >
+        {children}
+      </section>
+    </div>
+  );
 }
-
 ```

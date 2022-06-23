@@ -10,7 +10,7 @@ import {
 export async function generateBase(
   callback: (
     root: string,
-    pages: PageRoute[]
+    routes: PageRoute[]
   ) => Promise<{ success: boolean; message: string }>
 ) {
   // List files in current folder using vscode.workspace.fs
@@ -19,39 +19,39 @@ export async function generateBase(
     showErrorMessage("No workspace folder found");
   } else {
     const root = folder[0].uri.fsPath;
-    // Check for pages folder
-    let pagesDir: vscode.Uri | undefined;
-    const pagesDirPath = getSetting("pagesDir") || "pages";
+    // Check for routes folder
+    let routesDir: vscode.Uri | undefined;
+    const routesDirPath = getSetting("routesDir") || "routes";
     for (const folderPath of [
-      `${root}/lib/pages`,
-      `${root}/src/pages`,
-      `${root}/${pagesDirPath}`,
+      `${root}/lib/routes`,
+      `${root}/src/routes`,
+      `${root}/${routesDirPath}`,
     ]) {
       const uri = vscode.Uri.parse(folderPath);
       try {
         await vscode.workspace.fs.stat(uri);
-        pagesDir = uri;
+        routesDir = uri;
         break;
       } catch (error) {}
     }
-    if (pagesDir) {
+    if (routesDir) {
       const files: string[] = [];
-      await readDir(pagesDir, files);
-      const pages = await analyzePages(files);
-      const { success, message } = await callback(root, pages);
+      await readDir(routesDir, files);
+      const routes = await analyzeroutes(files);
+      const { success, message } = await callback(root, routes);
       if (success) {
         showMessage(message);
       } else {
         showErrorMessage(message);
       }
     } else {
-      showErrorMessage("No pages folder found");
+      showErrorMessage("No routes folder found");
     }
   }
 }
 
-async function analyzePages(files: string[]) {
-  const pages: PageRoute[] = [];
+async function analyzeroutes(files: string[]) {
+  const routes: PageRoute[] = [];
   for (const file of files) {
     const contents = await readFile(file);
     // Remove extension
@@ -75,14 +75,14 @@ async function analyzePages(files: string[]) {
     ) {
       continue;
     }
-    let route = `${file}`.split("pages")[1];
+    let route = `${file}`.split("routes")[1];
     route = route.replace(`.${fileType}`, "");
     if (route) {
       route = route.trim();
       route = route.replace("/index", "/").replace("/root", "");
       route = route.split(".").join("/");
       if (fileType === "dart") {
-        pages.push({
+        routes.push({
           path: file,
           contents,
           route,
@@ -90,7 +90,7 @@ async function analyzePages(files: string[]) {
           ext: fileType,
         });
       } else if (fileType === "tsx" || fileType === "jsx") {
-        pages.push({
+        routes.push({
           path: file,
           contents,
           route,
@@ -98,11 +98,17 @@ async function analyzePages(files: string[]) {
           ext: fileType,
         });
       } else if (fileType === "ts" || fileType === "js") {
-        pages.push({ path: file, contents, route, type: "lit", ext: fileType });
+        routes.push({
+          path: file,
+          contents,
+          route,
+          type: "lit",
+          ext: fileType,
+        });
       }
     }
   }
-  return pages;
+  return routes;
 }
 
 type ProjectType = "lit" | "flutter" | "react";

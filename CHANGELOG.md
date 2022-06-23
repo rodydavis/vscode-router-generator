@@ -1,3 +1,13 @@
+## 1.1.0
+
+- Removing Lit SSR
+- Removing Lit loaders
+- Adding Lit labs router
+- Adding URLPattern polyfill
+- Removing Flutter router in favor of go_router
+- Removing Flutter loader and method builder
+- Adding Flutter class support for attributes and child
+
 ## 1.0.4
 
 - Adding support for adding extension

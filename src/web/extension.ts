@@ -2,11 +2,9 @@ import * as vscode from "vscode";
 import { generateBase } from "./commands/base";
 import { generateFlutter } from "./commands/flutter/generate";
 import { generateJson } from "./commands/json/generate";
-import { exportLitSSr } from "./commands/lit/ssr";
 import { exportLit } from "./commands/lit/generate";
 import { generateReact } from "./commands/react/generate";
 import { addCommand, getSetting, writeFile } from "./commands/utils";
-import { exportLitComponent } from "./commands/lit/component";
 
 export function activate(context: vscode.ExtensionContext) {
   addCommand(context, "generate-lit", () => generateBase(async (root, pages) => {
@@ -14,18 +12,6 @@ export function activate(context: vscode.ExtensionContext) {
     const contents = exportLit(pages);
     await writeFile(outFile, contents);
     return { success: true, message: "Lit router generated!" };
-  }));
-  addCommand(context, "generate-lit-ssr", () => generateBase(async (root, pages) => {
-    const outFile = getSetting<string>('lit-ssr-server-out-file') || `${root}/src/server.ts`;
-    const contents = await exportLitSSr(root, pages);
-    await writeFile(outFile, contents);
-    return { success: true, message: "Lit SSR router generated!" };
-  }));
-  addCommand(context, "generate-lit-router-component", () => generateBase(async (root, pages) => {
-    const outFile = getSetting<string>('lit-router-component-out-file') || `${root}/src/generated-app.ts`;
-    const contents = await exportLitComponent(root, pages);
-    await writeFile(outFile, contents);
-    return { success: true, message: "Lit router component generated!" };
   }));
   addCommand(context, "generate-json", () => generateBase(async (root, pages) => {
     const outFile = getSetting<string>('json-out-file') || `${root}/routes.json`;

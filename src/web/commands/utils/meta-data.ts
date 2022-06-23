@@ -16,11 +16,11 @@ export function convertComponents<T extends Component>(components: T[]) {
       idx--;
     }
     const ext = file.slice(idx + 1, file.length);
-    let relativePath = component.path.split("pages")[1];
+    let relativePath = component.path.split("routes")[1];
     relativePath = relativePath.replace(`.${ext}`, "");
     component.ext = ext;
     component.alias = `route${i}`;
-    component.relativePath = "pages" + relativePath;
+    component.relativePath = "routes" + relativePath;
     const route = `${component.route}`;
     if (route === "") {
       continue;
@@ -98,6 +98,7 @@ export interface Component {
   path: string;
   ext?: string;
   relativePath?: string;
+  overrideRoute?: string;
   alias?: string;
   implicitIndex?: boolean;
   parentRoute?: string;

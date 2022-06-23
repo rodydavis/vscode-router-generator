@@ -1,48 +1,65 @@
 import { PageRoute } from "../base";
-import { Component } from "../utils/meta-data";
+import { Component, convertComponents } from "../utils/meta-data";
 
 export function analyzeWidget(page: PageRoute): FlutterWidget | null {
-    const path = page.path;
-    const relativePath = "pages" + path.split("pages")[1];
-    const route = page.route.replace("/root", "").replace("/index", "/");
-    const raw = page.contents;
+  const path = page.path;
+  const relativePath = "routes" + path.split("routes")[1];
+  const route = page.route.replace("/root", "").replace("/index", "/");
+  const raw = page.contents;
 
-    // Use regex to find "class MyWidget extends UiRoute" 
-    const className = raw.match(/class ([^ ]+) extends UiRoute/g);
+  // Use regex to find "class MyWidget extends UiRoute"
+  const className =
+    raw.match(/class ([^ ]+) extends StatelessWidget/g) ||
+    raw.match(/class ([^ ]+) extends StatefulWidget/g);
 
-    if (className !== null) {
-        const name = className[0].split(" ")[1].trim();
-        return {
-            name,
-            relativePath,
-            route,
-            path, 
-            args: [],
-        };
-    }
+  if (className !== null) {
+    const name = className[0].split(" ")[1].trim();
+    const obj = {
+      name,
+      relativePath,
+      route,
+      path,
+      args: [] as string[],
+    };
+    // Route /info/:id/:name => [id, name]
+    obj.args = route
+      .split("/")
+      .filter((x) => x.startsWith(":"))
+      .map((x) => x.substring(1));
+    return obj;
+  }
 
-    return null;
+  return null;
 }
 
 export function pagesToWidgets(pages: PageRoute[]): FlutterWidget[] {
-    const widgets: FlutterWidget[] = [];
-    for (const page of pages) {
-        console.debug('router-generator', `Analyzing ${page.path}`);
-        const widget = analyzeWidget(page);
-        if (widget) { widgets.push(widget); }
+  const components: FlutterWidget[] = [];
+  let i = 0;
+  for (const page of pages) {
+    const { path, route, contents } = page;
+    const relativePath = path.split("routes")[1];
+    const filePath = `./routes${relativePath}`;
+    const fileRoute = route.replace("/root", "").replace("/index", "/");
+    const results = analyzeWidget(page);
+    if (results) {
+      const c = results;
+      c.path = path;
+      components.push(c);
     }
-    return widgets
-        .sort((a, b) => {
-            if (a.route < b.route) {
-                return -1;
-            }
-            if (a.route > b.route) {
-                return 1;
-            }
-            return 0;
-        })
-        .reverse();
+    i++;
+  }
+  const sorted = components
+    .sort((a, b) => {
+      if (a.route < b.route) {
+        return -1;
+      }
+      if (a.route > b.route) {
+        return 1;
+      }
+      return 0;
+    })
+    .reverse();
+  return convertComponents(sorted);
 }
 
-interface FlutterWidget extends Component {
-}
+export interface FlutterWidget extends Component {}
