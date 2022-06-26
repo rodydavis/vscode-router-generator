@@ -1,3 +1,7 @@
+## 1.1.1
+
+- Fix for flutter index route
+
 ## 1.1.0
 
 - Removing Lit SSR

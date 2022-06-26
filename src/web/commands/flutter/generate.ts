@@ -31,7 +31,7 @@ final router = GoRouter(
 
 export function generateFlutter(root: string, pages: PageRoute[]) {
   const components = pagesToWidgets(pages);
-  
+
   const h = new StringBuilder();
   addHeader(h, components);
   let i = 0;
@@ -61,6 +61,9 @@ export function generateFlutter(root: string, pages: PageRoute[]) {
         route = parentRoute;
         comp.overrideRoute = parentRoute;
         ignore.push(parentRoute);
+      } else {
+        route = parentRoute;
+        comp.overrideRoute = parentRoute;
       }
     }
     const tree = getComponentTree(comp, components);
