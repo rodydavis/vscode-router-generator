@@ -1,4 +1,3 @@
-import { render } from "mustache";
 import { PageRoute } from "../base";
 import { addHeader } from "../utils/comments";
 import { getComponentTree } from "../utils/meta-data";
@@ -66,6 +65,7 @@ export function generateFlutter(root: string, pages: PageRoute[]) {
         comp.overrideRoute = parentRoute;
       }
     }
+
     const tree = getComponentTree(comp, components);
     let slot: string | undefined;
     for (const c of tree.reverse()) {

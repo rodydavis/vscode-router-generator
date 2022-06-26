@@ -3,6 +3,7 @@
 
 // Page Routes
 // "/settings": RootPage > SettingsPage
+// "/dashboard/:tab": RootPage > DashboardTab
 // "/dashboard/": RootPage > Dashboard
 // "/about/guest": RootPage > AboutPage > GuestPage
 // "/about/:id": RootPage > AboutPage > AccountPage
@@ -17,39 +18,44 @@
 import 'package:go_router/go_router.dart';
 
 import 'routes/settings.dart' as route0;
-import 'routes/dashboard/index.dart' as route1;
-import 'routes/about/guest.dart' as route2;
-import 'routes/about/:id.dart' as route3;
-import 'routes/about/index.dart' as route4;
-import 'routes/about.dart' as route5;
-import 'routes/index.dart' as route6;
-import 'routes/root.dart' as route7;
+import 'routes/dashboard/[tab].dart' as route1;
+import 'routes/dashboard/index.dart' as route2;
+import 'routes/about/guest.dart' as route3;
+import 'routes/about/:id.dart' as route4;
+import 'routes/about/index.dart' as route5;
+import 'routes/about.dart' as route6;
+import 'routes/index.dart' as route7;
+import 'routes/root.dart' as route8;
 
 final router = GoRouter(
   routes: <GoRoute>[
     GoRoute(
         path: '/settings',
-        builder: (context, state) => route7.RootPage( child: route0.SettingsPage(),),
+        builder: (context, state) => route8.RootPage( child: route0.SettingsPage(),),
+    ),
+    GoRoute(
+        path: '/dashboard/:tab',
+        builder: (context, state) => route8.RootPage( child: route1.DashboardTab( tab: state.params['tab']!,),),
     ),
     GoRoute(
         path: '/dashboard',
-        builder: (context, state) => route7.RootPage( child: route1.Dashboard(),),
+        builder: (context, state) => route8.RootPage( child: route2.Dashboard(),),
     ),
     GoRoute(
         path: '/about/guest',
-        builder: (context, state) => route7.RootPage( child: route5.AboutPage( child: route2.GuestPage(),),),
+        builder: (context, state) => route8.RootPage( child: route6.AboutPage( child: route3.GuestPage(),),),
     ),
     GoRoute(
         path: '/about/:id',
-        builder: (context, state) => route7.RootPage( child: route5.AboutPage( child: route3.AccountPage( id: state.params['id']!,),),),
+        builder: (context, state) => route8.RootPage( child: route6.AboutPage( child: route4.AccountPage( id: state.params['id']!,),),),
     ),
     GoRoute(
         path: '/about',
-        builder: (context, state) => route7.RootPage( child: route5.AboutPage( child: route4.AboutDetails(),),),
+        builder: (context, state) => route8.RootPage( child: route6.AboutPage( child: route5.AboutDetails(),),),
     ),
     GoRoute(
         path: '/',
-        builder: (context, state) => route7.RootPage( child: route6.HomePage(),),
+        builder: (context, state) => route8.RootPage( child: route7.HomePage(),),
     ),
   ],
 );

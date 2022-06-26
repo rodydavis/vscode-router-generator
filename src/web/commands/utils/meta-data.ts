@@ -1,14 +1,10 @@
+import { convertRoute, getRouteArgs } from "./args";
+
 export function convertComponents<T extends Component>(components: T[]) {
   for (let i = 0; i < components.length; i++) {
     const component = components[i];
-    const args: string[] = [];
-    for (const part of component.route.split("/")) {
-      if (part.startsWith(":")) {
-        args.push(part.slice(1));
-      }
-    }
     component.route = component.route.toLowerCase();
-    component.args = args;
+    component.args = getRouteArgs(component.route);
     // Remove extension
     const file = component.path;
     let idx = file.length - 1;
@@ -52,6 +48,9 @@ export function convertComponents<T extends Component>(components: T[]) {
         component.parentRoute = "";
       }
     }
+
+    // Convert /info/[id]/test to /info/:id/test
+    component.route = convertRoute(route);
   }
 
   return components

@@ -1,4 +1,5 @@
 import { PageRoute } from "../base";
+import { getRouteArgs } from "../utils/args";
 import { Component, convertComponents } from "../utils/meta-data";
 
 export function analyzeWidget(page: PageRoute): FlutterWidget | null {
@@ -14,19 +15,13 @@ export function analyzeWidget(page: PageRoute): FlutterWidget | null {
 
   if (className !== null) {
     const name = className[0].split(" ")[1].trim();
-    const obj = {
+    return {
       name,
       relativePath,
       route,
       path,
-      args: [] as string[],
+      args: getRouteArgs(route),
     };
-    // Route /info/:id/:name => [id, name]
-    obj.args = route
-      .split("/")
-      .filter((x) => x.startsWith(":"))
-      .map((x) => x.substring(1));
-    return obj;
   }
 
   return null;
