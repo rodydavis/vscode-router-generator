@@ -1,3 +1,12 @@
+## 1.1.3
+
+- Adding nested `go_router` routes
+
+## 1.1.2
+
+- Bug fixes
+- Adding support for [id] style routes
+
 ## 1.1.1
 
 - Fix for flutter index route
@@ -8,7 +17,7 @@
 - Removing Lit loaders
 - Adding Lit labs router
 - Adding URLPattern polyfill
-- Removing Flutter router in favor of go_router
+- Removing Flutter router in favor of `go_router`
 - Removing Flutter loader and method builder
 - Adding Flutter class support for attributes and child
 

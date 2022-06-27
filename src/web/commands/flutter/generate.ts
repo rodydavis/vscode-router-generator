@@ -3,6 +3,7 @@ import { addHeader } from "../utils/comments";
 import { getComponentTree } from "../utils/meta-data";
 import { StringBuilder } from "../utils/string-builder";
 import { renderTemplate } from "../utils/template";
+import { Trie, TrieNode } from "../utils/trie";
 import { FlutterWidget, pagesToWidgets } from "./analyze";
 
 const TEMPLATE_SOURCE = `{{{header}}}
@@ -16,14 +17,7 @@ import '{{{relativePath}}}.dart' as {{{alias}}};
 
 final router = GoRouter(
   routes: <GoRoute>[
-    {{#components}}
-    {{#template}}
-    GoRoute(
-        path: '{{{route}}}',
-        builder: (context, state) => {{{template}}},
-    ),
-    {{/template}}
-    {{/components}}
+    {{{routes}}}
   ],
 );
 `;
@@ -39,44 +33,24 @@ export function generateFlutter(root: string, pages: PageRoute[]) {
     p.alias = `route${i}`;
     i++;
   }
-  const ignore: string[] = [];
-  const skip: string[] = [""];
-  for (const component of components) {
-    const comp = component;
+
+  const trie = new Trie<FlutterWidget>();
+  for (const comp of components.reverse()) {
     if (comp.route === "") {
       continue;
     }
-    if (ignore.includes(comp.route)) {
-      continue;
-    }
-    let route = comp.route;
-    // Check for ending with /
-    if (comp.route.endsWith("/") && comp.route !== "/") {
-      // Check if has parent route
-      const parentRoute = comp.route.substring(0, comp.route.length - 1);
-      const parent = components.find((c) => c.route === parentRoute);
-      if (parent) {
-        skip.push(comp.route);
-        route = parentRoute;
-        comp.overrideRoute = parentRoute;
-        ignore.push(parentRoute);
-      } else {
-        route = parentRoute;
-        comp.overrideRoute = parentRoute;
-      }
-    }
-
-    const tree = getComponentTree(comp, components);
-    let slot: string | undefined;
-    for (const c of tree.reverse()) {
-      slot = renderComponent(c, slot);
-    }
-    Object(comp)["template"] = slot;
-    comp.route = route;
+    trie.add(comp.route, comp);
   }
+
+  const trieJson = JSON.stringify(trie, replacer, 2);
+  console.log(trieJson);
+
+  const routes = exportTrie("", trie.root, components);
+
   const template = renderTemplate(TEMPLATE_SOURCE, {
     header: h.toString(),
     components,
+    routes,
   });
   return template;
 }
@@ -92,4 +66,73 @@ function renderComponent(comp: FlutterWidget, slot?: string) {
   }
   sb.write(`)`);
   return sb.toString();
+}
+
+function exportTrie(
+  part: string,
+  node: TrieNode<FlutterWidget>,
+  components: FlutterWidget[]
+) {
+  const sb = new StringBuilder();
+  let comp = node.value;
+
+  if (!comp && part !== "") {
+    // Check for index route
+    if (node.children.has("index")) {
+      const child = node.children.get("index")!.value;
+      if (child) {
+        comp = child;
+      }
+    }
+  }
+
+  if (comp) {
+    // Check if has implicit index
+    if (node.children.has("index")) {
+      comp = node.children.get("index")!.value!;
+    }
+    const tree = getComponentTree(comp, components);
+    let template: string | undefined;
+    for (const c of tree.reverse()) {
+      template = renderComponent(c, template);
+    }
+    let compRoute = comp.route;
+    if (compRoute.endsWith("/") && compRoute !== "/") {
+      compRoute = compRoute.substring(0, compRoute.length - 1);
+    }
+    compRoute = compRoute.substring(
+      compRoute.lastIndexOf("/") + 1,
+      compRoute.length
+    );
+    sb.writeln("GoRoute(");
+    sb.writeln(` path: '${compRoute || "/"}',`);
+    sb.writeln(` builder: (context, state) => ${template},`);
+    sb.writeln(" routes: <GoRoute>[");
+  }
+
+  const children = Array.from(node.children.entries());
+  if (children.length > 0) {
+    for (const [key, child] of children) {
+      if (comp === child.value) {
+        continue;
+      }
+      sb.writeln(exportTrie(`${key}`, child, components));
+    }
+  }
+
+  if (comp) {
+    sb.writeln("  ],");
+    sb.writeln("),");
+  }
+
+  return sb.toString();
+}
+
+function replacer(key: string, value: any) {
+  if (key === "value") {
+    if (value?.route) {
+      return value.route;
+    }
+  }
+  return value;
 }

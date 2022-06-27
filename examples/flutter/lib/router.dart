@@ -12,50 +12,83 @@
 // "/": RootPage > HomePage
 // "": RootPage
 
-
 // ignore_for_file: prefer_const_constructors
 
 import 'package:go_router/go_router.dart';
 
-import 'routes/settings.dart' as route0;
-import 'routes/dashboard/[tab].dart' as route1;
-import 'routes/dashboard/index.dart' as route2;
-import 'routes/about/guest.dart' as route3;
-import 'routes/about/:id.dart' as route4;
-import 'routes/about/index.dart' as route5;
-import 'routes/about.dart' as route6;
-import 'routes/index.dart' as route7;
 import 'routes/root.dart' as route8;
+import 'routes/index.dart' as route7;
+import 'routes/about.dart' as route6;
+import 'routes/about/index.dart' as route5;
+import 'routes/about/:id.dart' as route4;
+import 'routes/about/guest.dart' as route3;
+import 'routes/dashboard/index.dart' as route2;
+import 'routes/dashboard/[tab].dart' as route1;
+import 'routes/settings.dart' as route0;
 
 final router = GoRouter(
   routes: <GoRoute>[
     GoRoute(
-        path: '/settings',
-        builder: (context, state) => route8.RootPage( child: route0.SettingsPage(),),
-    ),
-    GoRoute(
-        path: '/dashboard/:tab',
-        builder: (context, state) => route8.RootPage( child: route1.DashboardTab( tab: state.params['tab']!,),),
-    ),
-    GoRoute(
-        path: '/dashboard',
-        builder: (context, state) => route8.RootPage( child: route2.Dashboard(),),
-    ),
-    GoRoute(
-        path: '/about/guest',
-        builder: (context, state) => route8.RootPage( child: route6.AboutPage( child: route3.GuestPage(),),),
-    ),
-    GoRoute(
-        path: '/about/:id',
-        builder: (context, state) => route8.RootPage( child: route6.AboutPage( child: route4.AccountPage( id: state.params['id']!,),),),
-    ),
-    GoRoute(
-        path: '/about',
-        builder: (context, state) => route8.RootPage( child: route6.AboutPage( child: route5.AboutDetails(),),),
-    ),
-    GoRoute(
-        path: '/',
-        builder: (context, state) => route8.RootPage( child: route7.HomePage(),),
+      path: '/',
+      builder: (context, state) => route8.RootPage(
+        child: route7.HomePage(),
+      ),
+      routes: <GoRoute>[
+        GoRoute(
+          path: 'about',
+          builder: (context, state) => route8.RootPage(
+            child: route6.AboutPage(
+              child: route5.AboutDetails(),
+            ),
+          ),
+          routes: <GoRoute>[
+            GoRoute(
+              path: ':id',
+              builder: (context, state) => route8.RootPage(
+                child: route6.AboutPage(
+                  child: route4.AccountPage(
+                    id: state.params['id']!,
+                  ),
+                ),
+              ),
+              routes: <GoRoute>[],
+            ),
+            GoRoute(
+              path: 'guest',
+              builder: (context, state) => route8.RootPage(
+                child: route6.AboutPage(
+                  child: route3.GuestPage(),
+                ),
+              ),
+              routes: <GoRoute>[],
+            ),
+          ],
+        ),
+        GoRoute(
+          path: 'dashboard',
+          builder: (context, state) => route8.RootPage(
+            child: route2.Dashboard(),
+          ),
+          routes: <GoRoute>[
+            GoRoute(
+              path: ':tab',
+              builder: (context, state) => route8.RootPage(
+                child: route1.DashboardTab(
+                  tab: state.params['tab']!,
+                ),
+              ),
+              routes: <GoRoute>[],
+            ),
+          ],
+        ),
+        GoRoute(
+          path: 'settings',
+          builder: (context, state) => route8.RootPage(
+            child: route0.SettingsPage(),
+          ),
+          routes: <GoRoute>[],
+        ),
+      ],
     ),
   ],
 );
