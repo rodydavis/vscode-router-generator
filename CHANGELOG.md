@@ -1,6 +1,10 @@
+## 1.1.5
+
+- Fix for case sensitive routes
+
 ## 1.1.4
 
-- Fix for case sensitive routes / args
+- Fix for case sensitive args
 
 ## 1.1.3
 

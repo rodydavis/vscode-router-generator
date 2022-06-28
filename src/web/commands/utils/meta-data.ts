@@ -5,7 +5,7 @@ export function convertComponents<T extends Component>(components: T[]) {
     const component = components[i];
     const compRoute = component.route;
     component.args = getRouteArgs(compRoute);
-    component.route = compRoute.toLowerCase();
+    component.route = compRoute;
     // Remove extension
     const file = component.path;
     let idx = file.length - 1;
