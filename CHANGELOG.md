@@ -1,3 +1,7 @@
+## 1.1.4
+
+- Fix for case sensitive routes / args
+
 ## 1.1.3
 
 - Adding nested `go_router` routes

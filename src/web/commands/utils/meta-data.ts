@@ -3,8 +3,9 @@ import { convertRoute, getRouteArgs } from "./args";
 export function convertComponents<T extends Component>(components: T[]) {
   for (let i = 0; i < components.length; i++) {
     const component = components[i];
-    component.route = component.route.toLowerCase();
-    component.args = getRouteArgs(component.route);
+    const compRoute = component.route;
+    component.args = getRouteArgs(compRoute);
+    component.route = compRoute.toLowerCase();
     // Remove extension
     const file = component.path;
     let idx = file.length - 1;
