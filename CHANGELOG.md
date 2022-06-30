@@ -1,3 +1,8 @@
+## 1.1.6
+
+- Fixing args sorting
+- Adding routes option for flutter to be used to customize the router
+
 ## 1.1.5
 
 - Fix for case sensitive routes

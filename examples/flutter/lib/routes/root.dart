@@ -16,6 +16,7 @@ class RootPage extends StatelessWidget {
       Destination('Guest', Icons.person, '/about/guest'),
       Destination('Account', Icons.person, '/about/2'),
       Destination('About', Icons.info, '/about'),
+      Destination('List', Icons.list, '/list'),
       Destination('Settings', Icons.settings, '/settings'),
     ];
     return Scaffold(

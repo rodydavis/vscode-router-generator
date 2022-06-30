@@ -15,10 +15,12 @@ import 'package:go_router/go_router.dart';
 import '{{{relativePath}}}.dart' as {{{alias}}};
 {{/components}}
 
+final routes = <GoRoute>[
+  {{{routes}}}
+];
+
 final router = GoRouter(
-  routes: <GoRoute>[
-    {{{routes}}}
-  ],
+  routes: routes,
 );
 `;
 
@@ -110,9 +112,12 @@ function exportTrie(
     sb.writeln(" routes: <GoRoute>[");
   }
 
-  const children = Array.from(node.children.entries());
-  if (children.length > 0) {
-    for (const [key, child] of children) {
+  let childrenKeys = Array.from(node.children.keys());
+  if (childrenKeys.length > 0) {
+    childrenKeys = childrenKeys.sort();
+    childrenKeys = childrenKeys.reverse();
+    for (const key of childrenKeys) {
+      const child = node.children.get(key)!;
       if (comp === child.value) {
         continue;
       }

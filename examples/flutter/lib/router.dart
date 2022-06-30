@@ -3,10 +3,11 @@
 
 // Page Routes
 // "/settings": RootPage > SettingsPage
-// "/list/:groupid/settings/:id/": RootPage > SettingInfo
-// "/list/:groupid/settings/": RootPage > GroupSettings
-// "/list/:groupid/edit": RootPage > EditGroup
-// "/list/:groupid/": RootPage > ExampleDetails
+// "/list/:groupId/settings/:id/": RootPage > SettingInfo
+// "/list/:groupId/settings/": RootPage > GroupSettings
+// "/list/:groupId/new": RootPage > NewListItem
+// "/list/:groupId/edit": RootPage > EditGroup
+// "/list/:groupId/": RootPage > ExampleDetails
 // "/list/": RootPage > ExampleList
 // "/dashboard/:tab": RootPage > DashboardTab
 // "/dashboard/": RootPage > Dashboard
@@ -21,131 +22,143 @@
 
 import 'package:go_router/go_router.dart';
 
-import 'routes/root.dart' as route13;
-import 'routes/index.dart' as route12;
-import 'routes/about.dart' as route11;
-import 'routes/about/index.dart' as route10;
-import 'routes/about/:id.dart' as route9;
-import 'routes/about/guest.dart' as route8;
-import 'routes/dashboard/index.dart' as route7;
-import 'routes/dashboard/[tab].dart' as route6;
-import 'routes/list/index.dart' as route5;
-import 'routes/list/[groupId]/index.dart' as route4;
-import 'routes/list/[groupId]/edit.dart' as route3;
+import 'routes/root.dart' as route14;
+import 'routes/index.dart' as route13;
+import 'routes/about.dart' as route12;
+import 'routes/about/index.dart' as route11;
+import 'routes/about/:id.dart' as route10;
+import 'routes/about/guest.dart' as route9;
+import 'routes/dashboard/index.dart' as route8;
+import 'routes/dashboard/[tab].dart' as route7;
+import 'routes/list/index.dart' as route6;
+import 'routes/list/[groupId]/index.dart' as route5;
+import 'routes/list/[groupId]/edit.dart' as route4;
+import 'routes/list/[groupId]/new.dart' as route3;
 import 'routes/list/[groupId]/settings/index.dart' as route2;
 import 'routes/list/[groupId]/settings/[id]/index.dart' as route1;
 import 'routes/settings.dart' as route0;
 
-final router = GoRouter(
-  routes: <GoRoute>[
-    GoRoute(
-      path: '/',
-      builder: (context, state) => route13.RootPage(
-        child: route12.HomePage(),
-      ),
-      routes: <GoRoute>[
-        GoRoute(
-          path: 'about',
-          builder: (context, state) => route13.RootPage(
-            child: route11.AboutPage(
-              child: route10.AboutDetails(),
-            ),
-          ),
-          routes: <GoRoute>[
-            GoRoute(
-              path: ':id',
-              builder: (context, state) => route13.RootPage(
-                child: route11.AboutPage(
-                  child: route9.AccountPage(
-                    id: state.params['id']!,
-                  ),
-                ),
-              ),
-              routes: <GoRoute>[],
-            ),
-            GoRoute(
-              path: 'guest',
-              builder: (context, state) => route13.RootPage(
-                child: route11.AboutPage(
-                  child: route8.GuestPage(),
-                ),
-              ),
-              routes: <GoRoute>[],
-            ),
-          ],
-        ),
-        GoRoute(
-          path: 'dashboard',
-          builder: (context, state) => route13.RootPage(
-            child: route7.Dashboard(),
-          ),
-          routes: <GoRoute>[
-            GoRoute(
-              path: ':tab',
-              builder: (context, state) => route13.RootPage(
-                child: route6.DashboardTab(
-                  tab: state.params['tab']!,
-                ),
-              ),
-              routes: <GoRoute>[],
-            ),
-          ],
-        ),
-        GoRoute(
-          path: 'list',
-          builder: (context, state) => route13.RootPage(
-            child: route5.ExampleList(),
-          ),
-          routes: <GoRoute>[
-            GoRoute(
-              path: ':groupid',
-              builder: (context, state) => route13.RootPage(
-                child: route4.ExampleDetails(
-                  groupId: state.params['groupId']!,
-                ),
-              ),
-              routes: <GoRoute>[
-                GoRoute(
-                  path: 'edit',
-                  builder: (context, state) => route13.RootPage(
-                    child: route3.EditGroup(
-                      groupId: state.params['groupId']!,
-                    ),
-                  ),
-                  routes: <GoRoute>[],
-                ),
-                GoRoute(
-                  path: 'settings',
-                  builder: (context, state) => route13.RootPage(
-                    child: route2.GroupSettings(
-                      groupId: state.params['groupId']!,
-                    ),
-                  ),
-                  routes: <GoRoute>[
-                    GoRoute(
-                      path: ':id',
-                      builder: (context, state) => route13.RootPage(
-                        child: route1.SettingInfo(
-                          groupId: state.params['groupId']!,
-                          id: state.params['id']!,
-                        ),
-                      ),
-                      routes: <GoRoute>[],
-                    ),
-                  ],
-                ),
-              ],
-            ),
-          ],
-        ),
-        GoRoute(
-          path: 'settings',
-          builder: (context, state) => route13.RootPage(
-            child: route0.SettingsPage(),
-          ),
-          routes: <GoRoute>[],
-        ),
-      ],
+final routes = <GoRoute>[
+  GoRoute(
+    path: '/',
+    builder: (context, state) => route14.RootPage(
+      child: route13.HomePage(),
     ),
-  ],
+    routes: <GoRoute>[
+      GoRoute(
+        path: 'settings',
+        builder: (context, state) => route14.RootPage(
+          child: route0.SettingsPage(),
+        ),
+        routes: <GoRoute>[],
+      ),
+      GoRoute(
+        path: 'list',
+        builder: (context, state) => route14.RootPage(
+          child: route6.ExampleList(),
+        ),
+        routes: <GoRoute>[
+          GoRoute(
+            path: ':groupId',
+            builder: (context, state) => route14.RootPage(
+              child: route5.ExampleDetails(
+                groupId: state.params['groupId']!,
+              ),
+            ),
+            routes: <GoRoute>[
+              GoRoute(
+                path: 'settings',
+                builder: (context, state) => route14.RootPage(
+                  child: route2.GroupSettings(
+                    groupId: state.params['groupId']!,
+                  ),
+                ),
+                routes: <GoRoute>[
+                  GoRoute(
+                    path: ':id',
+                    builder: (context, state) => route14.RootPage(
+                      child: route1.SettingInfo(
+                        groupId: state.params['groupId']!,
+                        id: state.params['id']!,
+                      ),
+                    ),
+                    routes: <GoRoute>[],
+                  ),
+                ],
+              ),
+              GoRoute(
+                path: 'new',
+                builder: (context, state) => route14.RootPage(
+                  child: route3.NewListItem(
+                    groupId: state.params['groupId']!,
+                  ),
+                ),
+                routes: <GoRoute>[],
+              ),
+              GoRoute(
+                path: 'edit',
+                builder: (context, state) => route14.RootPage(
+                  child: route4.EditGroup(
+                    groupId: state.params['groupId']!,
+                  ),
+                ),
+                routes: <GoRoute>[],
+              ),
+            ],
+          ),
+        ],
+      ),
+      GoRoute(
+        path: 'dashboard',
+        builder: (context, state) => route14.RootPage(
+          child: route8.Dashboard(),
+        ),
+        routes: <GoRoute>[
+          GoRoute(
+            path: ':tab',
+            builder: (context, state) => route14.RootPage(
+              child: route7.DashboardTab(
+                tab: state.params['tab']!,
+              ),
+            ),
+            routes: <GoRoute>[],
+          ),
+        ],
+      ),
+      GoRoute(
+        path: 'about',
+        builder: (context, state) => route14.RootPage(
+          child: route12.AboutPage(
+            child: route11.AboutDetails(),
+          ),
+        ),
+        routes: <GoRoute>[
+          GoRoute(
+            path: 'guest',
+            builder: (context, state) => route14.RootPage(
+              child: route12.AboutPage(
+                child: route9.GuestPage(),
+              ),
+            ),
+            routes: <GoRoute>[],
+          ),
+          GoRoute(
+            path: ':id',
+            builder: (context, state) => route14.RootPage(
+              child: route12.AboutPage(
+                child: route10.AccountPage(
+                  id: state.params['id']!,
+                ),
+              ),
+            ),
+            routes: <GoRoute>[],
+          ),
+        ],
+      ),
+    ],
+  ),
+];
+
+final router = GoRouter(
+  routes: routes,
 );
